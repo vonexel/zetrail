@@ -1,0 +1,9 @@
+[project]
+name = "zetrail"
+version = "0.1.0"
+description = "A research assistant Zotero Plugin intended for searching your academic library, verifying claims against source passages, synthesizing evidence across papers, and tracing each result back to the exact document and page"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "pydantic>=2.13.5",
+]
