@@ -1,0 +1,5 @@
+{
+  "name": "lexical-v1",
+  "strategy": "lexical",
+  "candidate_k": 40
+}

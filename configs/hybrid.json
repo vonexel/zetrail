@@ -1,0 +1,6 @@
+{
+  "name": "hybrid-v1",
+  "strategy": "hybrid",
+  "candidate_k": 40,
+  "min_dense_score": 0.35
+}

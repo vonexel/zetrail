@@ -1,0 +1,6 @@
+{
+  "name": "dense-v1",
+  "strategy": "dense",
+  "candidate_k": 40,
+  "min_dense_score": 0.35
+}
