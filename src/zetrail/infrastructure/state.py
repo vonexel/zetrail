@@ -104,4 +104,5 @@ class StateStore:
 
     def get(self, id: str, kind: str | None = None) -> dict[str, Any] | None:
         with self.lock:
-            return [json.loads(row[0]) for row in self.db.execute("SELECT payload FROM records WHERE kind = ? ORDER BY created DESC LIMIT 100", (kind,))]
+            row = self.db.execute("SELECT kind, payload FROM records WHERE id = ?", (id,)).fetchone()
+            return json.loads(row[1]) if row and (kind is None or row[0] == kind) else None
