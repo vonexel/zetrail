@@ -106,3 +106,20 @@ class StateStore:
         with self.lock:
             row = self.db.execute("SELECT kind, payload FROM records WHERE id = ?", (id,)).fetchone()
             return json.loads(row[1]) if row and (kind is None or row[0] == kind) else None
+
+    def list_records(self, kind: str) -> list[dict[str, Any]]:
+        with self.lock:
+            return [json.loads(row[0]) for row in self.db.execute("SELECT payload FROM records WHERE kind = ? ORDER BY created DESC LIMIT 100", (kind,))]
+
+    def pending_audit(self) -> list[dict[str, Any]]:
+        with self.lock:
+            return [dict(row) for row in self.db.execute("SELECT id, kind, payload FROM records WHERE kind IN ('retrieval', 'experiment') AND id NOT IN (SELECT id FROM audit_exports) ORDER BY created LIMIT 20")]
+
+    def mark_exported(self, id: str) -> None:
+        with self.lock, self.db:
+            self.db.execute("INSERT OR IGNORE INTO audit_exports VALUES (?)", (id,))
+
+    def close(self) -> None:
+        self.db.close()
+        if self.process_lock:
+            self.process_lock.close()
