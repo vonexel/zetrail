@@ -5,6 +5,7 @@ description = "A research assistant Zotero Plugin intended for searching your ac
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "httpx>=0.28.1",
     "pydantic>=2.13.5",
     "pydantic-settings>=2.15.0",
     "pymupdf>=1.28.2",
